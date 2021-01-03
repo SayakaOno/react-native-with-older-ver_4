@@ -5,12 +5,13 @@ import {createStore} from 'redux';
 import firebase from 'firebase';
 import reducers from './reducer';
 import config from '../firebaseConfig';
+import LoginForm from './components/LoginForm';
 
 const App = () => {
   return (
     <Provider store={createStore(reducers)}>
       <View>
-        <Text>Hello</Text>
+        <LoginForm />
       </View>
     </Provider>
   );
