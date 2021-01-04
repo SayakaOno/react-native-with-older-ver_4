@@ -8,6 +8,7 @@ import reducers from './reducer';
 import config from '../firebaseConfig';
 import LoginForm from './components/LoginForm';
 import {Header} from './components/common';
+import Router from './Router';
 
 const App = () => {
   useEffect(() => {
@@ -20,10 +21,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <View>
-        <Header headerText="App" />
-        <LoginForm />
-      </View>
+      <Router />
     </Provider>
   );
 };
