@@ -6,11 +6,13 @@ import firebase from 'firebase';
 import reducers from './reducer';
 import config from '../firebaseConfig';
 import LoginForm from './components/LoginForm';
+import {Header} from './components/common';
 
 const App = () => {
   return (
     <Provider store={createStore(reducers)}>
       <View>
+        <Header headerText="App" />
         <LoginForm />
       </View>
     </Provider>
