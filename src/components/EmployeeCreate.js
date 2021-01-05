@@ -1,10 +1,20 @@
 import React from 'react';
 import {Picker, Text, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import {employeeUpdate} from '../actions/EmployeeActions';
+import {employeeUpdate, employeeCreate} from '../actions/EmployeeActions';
 import {Card, CardSection, Input, Button, Spinner} from './common';
 
-const EmployeeCreate = ({name, phone, shift, employeeUpdate}) => {
+const EmployeeCreate = ({
+  name,
+  phone,
+  shift,
+  employeeUpdate,
+  employeeCreate,
+}) => {
+  const onButtonPress = () => {
+    employeeCreate({name, phone, shift: shift || 'Monday'});
+  };
+
   return (
     <Card>
       <CardSection>
@@ -12,7 +22,7 @@ const EmployeeCreate = ({name, phone, shift, employeeUpdate}) => {
           label="Name"
           placeholder="Jane"
           value={name}
-          onChangeText={value => employeeUpdate({porps: 'name', value})}
+          onChangeText={value => employeeUpdate({prop: 'name', value})}
         />
       </CardSection>
 
@@ -41,7 +51,7 @@ const EmployeeCreate = ({name, phone, shift, employeeUpdate}) => {
       </CardSection>
 
       <CardSection>
-        <Button>Create</Button>
+        <Button onPress={onButtonPress}>Create</Button>
       </CardSection>
     </Card>
   );
@@ -62,5 +72,5 @@ const mapPropsToState = state => {
 
 export default connect(
   mapPropsToState,
-  {employeeUpdate},
+  {employeeUpdate, employeeCreate},
 )(EmployeeCreate);
