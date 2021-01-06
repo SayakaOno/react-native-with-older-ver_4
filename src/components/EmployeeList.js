@@ -1,18 +1,37 @@
-import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import _ from 'lodash';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {FlatList} from 'react-native';
+import {employeesFetch} from '../actions';
+import ListItem from './ListItem';
 
-const EmployeeList = () => {
+const EmployeeList = ({employeesFetch, employees}) => {
+  useEffect(() => {
+    employeesFetch();
+  }, []);
+
+  const renderRow = employee => {
+    return <ListItem employee={employee} />;
+  };
+
   return (
-    <View>
-      <Text>Employee List</Text>
-      <Text>Employee List</Text>
-      <Text>Employee List</Text>
-      <Text>Employee List</Text>
-      <Text>Employee List</Text>
-      <Text>Employee List</Text>
-      <Text>Employee List</Text>
-    </View>
+    <FlatList
+      data={employees}
+      renderItem={({item}) => renderRow(item)}
+      keyExtractor={item => item.uid}
+    />
   );
 };
 
-export default EmployeeList;
+const mapStateToProps = state => {
+  const employees = _.map(state.employees, (val, uid) => {
+    return {...val, uid};
+  });
+
+  return {employees};
+};
+
+export default connect(
+  mapStateToProps,
+  {employeesFetch},
+)(EmployeeList);
