@@ -5,7 +5,7 @@ import {Actions} from 'react-native-router-flux';
 
 const ListItem = ({employee}) => {
   const onRowPress = () => {
-    Actions.employeeCreate({employee});
+    Actions.employeeEdit({employee});
   };
 
   return (
