@@ -1,20 +1,26 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
+import Communications from 'react-native-communications';
 import {employeeUpdate, employeeSave} from '../actions/EmployeeActions';
 import {Card, CardSection, Button} from './common';
 import EmployeeForm from './EmployeeForm';
 
 const EmployeeEdit = props => {
+  const {name, phone, shift, employee, employeeUpdate, employeeSave} = props;
+
   useEffect(() => {
-    _.each(props.employee, (value, prop) => {
-      props.employeeUpdate({prop, value});
+    _.each(employee, (value, prop) => {
+      employeeUpdate({prop, value});
     });
-  }, [props.employeeUpdate]);
+  }, [employeeUpdate]);
 
   const onButtonPress = () => {
-    const {name, phone, shift} = props;
-    props.employeeSave({name, phone, shift, uid: props.employee.uid});
+    employeeSave({name, phone, shift, uid: employee.uid});
+  };
+
+  const onTextPress = () => {
+    Communications.text(phone, `Your upcoming shift is on ${shift}`);
   };
 
   return (
@@ -22,6 +28,9 @@ const EmployeeEdit = props => {
       <EmployeeForm {...props} />
       <CardSection>
         <Button onPress={onButtonPress}>Save Changes</Button>
+      </CardSection>
+      <CardSection>
+        <Button onPress={onTextPress}>Text Schedule</Button>
       </CardSection>
     </Card>
   );
